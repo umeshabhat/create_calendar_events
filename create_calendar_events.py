@@ -48,7 +48,7 @@ def parse_ics_file(file_path):
             for component in calendar.walk():
                 if component.name == "VEVENT":
                     event = {
-                        'summary': component.get('summary'),
+                        'summary': "Event - " + component.get('summary'),
                         'start': {
                             'dateTime': component.get('dtstart').dt.isoformat(),
                             'timeZone': 'UTC',
@@ -114,6 +114,25 @@ def process_existing_files(service, folder_path):
                     prompt_delete_file(file_path)
     except Exception as e:
         print(f"Error processing existing files in {folder_path}: {e}")
+
+class IcsFileHandler(FileSystemEventHandler):
+    def __init__(self, service):
+        self.service = service
+
+    def on_created(self, event):
+        print(f"Event detected: {event.src_path}")
+        if event.is_directory:
+            return
+        if event.src_path.endswith('.ics'):
+            print(f"New .ics file detected: {event.src_path}")
+            event_data = parse_ics_file(event.src_path)
+            if event_data:
+                create_event(self.service, event_data)
+                prompt_delete_file(event.src_path)
+
+    def on_deleted(self, event):
+        print(f"File deleted: {event.src_path}")
+        # Handle any additional logic if needed when a file is deleted
 
 def monitor_folder(folder_path):
     creds = authenticate_google_calendar()
