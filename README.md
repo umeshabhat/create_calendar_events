@@ -12,51 +12,55 @@ You need these files to access Google Calendar API. Here's a breakdown of how to
 
 1. Set up a Google Cloud Project
 
-Go to the Google Cloud Console.
-Create a new project or select an existing one.
+    Go to the Google Cloud Console.
+    Create a new project or select an existing one.
+
 2. Enable the Google Calendar API
 
-In your project, navigate to "APIs & Services" > "Library".
-Search for "Google Calendar API" and enable it.
+    In your project, navigate to "APIs & Services" > "Library".
+    Search for "Google Calendar API" and enable it.
+
 3. Create Credentials
 
-Go to "APIs & Services" > "Credentials".
-Click "Create Credentials" > "OAuth client ID".
-Choose "Desktop app" as the application type.
-Give it a name (e.g., "My Calendar App").
-Click "Create".
+    Go to "APIs & Services" > "Credentials".
+    Click "Create Credentials" > "OAuth client ID".
+    Choose "Desktop app" as the application type.
+    Give it a name (e.g., "My Calendar App").
+    Click "Create".
+
 4. Download credentials.json
 
-A screen will appear with your new client ID and client secret.
-Click "Download JSON".
-Save this file as credentials.json in your project directory.
+    A screen will appear with your new client ID and client secret.
+    Click "Download JSON".
+    Save this file as credentials.json in your project directory.
+
 5. Generate token.json
 
-This is where things get a bit more technical, as you'll need to write some code to generate the token.json. Here's a basic Python example using the Google Calendar API client library:
+    This is where things get a bit more technical, as you'll need to write some code to generate the token.json. Here's a basic Python example using the Google Calendar API client library:
 
-```python
-from googleapiclient.discovery import build
-from google_auth_oauthlib.flow import InstalledAppFlow
-from google.auth.transport.requests import Request
-import os.path
-import pickle
+    ```python
+    from googleapiclient.discovery import build
+    from google_auth_oauthlib.flow import InstalledAppFlow
+    from google.auth.transport.requests import Request
+    import os.path
+    import pickle
 
-# If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
+    # If modifying these scopes, delete the file token.json.
+    SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
-def main():
-    creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-```            
-        
+    def main():
+        creds = None
+        # The file token.json stores the user's access and refresh tokens, and is
+        # created automatically when the authorization flow completes for the first
+        # time.
+        if os.path.exists('token.json'):
+            creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+        # If there are no (valid) credentials available, let the user log in.
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+    ```
+
 This code does the following:
 
 Sets up the necessary libraries.
@@ -65,6 +69,7 @@ Checks for an existing token.json file.
 If no token.json exists or it's invalid:
 Initiates an OAuth flow. This will open a browser window asking the user to grant your application access to their calendar.
 Saves the generated token in token.json.
+
 Important Notes:
 
 Security: Keep your credentials.json and token.json files safe. Never commit them to public repositories.
