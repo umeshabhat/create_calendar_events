@@ -48,6 +48,7 @@ def parse_ics_file(file_path):
             for component in calendar.walk():
                 if component.name == "VEVENT":
                     event = {
+                        ## Append event type from a selection of event types [Event, Webinar, Appointment, Meeting, etc.]
                         'summary': "Event - " + component.get('summary'),
                         'start': {
                             'dateTime': component.get('dtstart').dt.isoformat(),
@@ -57,6 +58,9 @@ def parse_ics_file(file_path):
                             'dateTime': component.get('dtend').dt.isoformat(),
                             'timeZone': 'UTC',
                         },
+                        'summary': component.get('summary'),
+                        'description': component.get('description'),
+                        'location': component.get('location')                      
                     }
                     return event
     except Exception as e:

@@ -76,3 +76,6 @@ Security: Keep your credentials.json and token.json files safe. Never commit the
 Scopes: Request only the necessary scopes for your application to minimize security risks.
 Refresh tokens: The token.json contains refresh tokens that allow your application to continue accessing the user's calendar without requiring them to re-authorize every time.
 This process might seem a bit involved at first, but it's crucial for secure access to Google Calendar data. Once you have these files, you can use the Google Calendar API to interact with calendars programmatically. If you have any more questions, feel free to ask!# create_calendar_events
+
+### References
+- https://developers.google.com/calendar/api/v3/reference/events
