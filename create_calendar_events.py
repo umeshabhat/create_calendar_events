@@ -58,9 +58,8 @@ def parse_ics_file(file_path):
                             'dateTime': component.get('dtend').dt.isoformat(),
                             'timeZone': 'UTC',
                         },
-                        'summary': component.get('summary'),
                         'description': component.get('description'),
-                        'location': component.get('location')                      
+                        'location': component.get('location')
                     }
                     return event
     except Exception as e:

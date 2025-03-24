@@ -1,12 +1,68 @@
 # Create Google Calendar Events from ICS
 
-## Prerequisites
+## Run the program
+
+### Ubuntu (WSL)
+
+```bash
+python3 -m venv ./venv
+source venv/bin/activate
+python3 -m pip install --upgrade pip
+python3 -m pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client watchdog icalendar
+```
+
+### Powershell
+
+```bash
+python -m venv venv_ps
+.\venv_ps\Scripts\activate
+python -m pip install --upgrade pip
+python -m pip install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client watchdog icalendar
+python .\generate_token.py
+python .\create_calendar_events.py
+### Enter the folder path to monitor: C:\Users\xerac\Downloads
+
+###
+### Enter the folder path to monitor: C:\Users\xerac\Downloads
+###Please visit this URL to authorize this application: https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=792218771561-u1ua5o3v8heghd1hdph703vmahra8r5f.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A52587%2F&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcalendar&state=WNYdy2ImwmWRBqoeae9mnkSyxlI65j&access_type=offline
+####
+```
+
+
+#### Trials [BROKEN]
+
+```bash
+sudo apt install pipx
+pipx install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client watchdog icalendar
+```
 
 ```bash
 python3 -m venv env
 source env/bin/activate
 pip3 install google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client watchdog icalendar
+python3 create_calendar_events.py
 ```
+
+```bash
+sudo apt-get remove pip
+sudo apt-get remove pip3
+sudo apt-get purge pip
+sudo apt-get purge pip3
+sudo apt-get remove python-setuptools
+sudo apt-get remove python3-setuptools
+
+python3 -m pip uninstall pip setuptools
+sudo python -m pip uninstall pip
+sudo python3 -m pip uninstall pip
+```
+
+#### Running
+
+```bash
+python3 generate_token.py
+```
+
+## Notes
 
 You need these files to access Google Calendar API. Here's a breakdown of how to obtain credentials.json and token.json:
 
@@ -20,13 +76,18 @@ You need these files to access Google Calendar API. Here's a breakdown of how to
     In your project, navigate to "APIs & Services" > "Library".
     Search for "Google Calendar API" and enable it.
 
+    Link: https://console.cloud.google.com/apis/library/calendar-json.googleapis.com
+
 3. Create Credentials
 
     Go to "APIs & Services" > "Credentials".
     Click "Create Credentials" > "OAuth client ID".
-    Choose "Desktop app" as the application type.
-    Give it a name (e.g., "My Calendar App").
+    Choose `Desktop App` for the application type and give it a name (say, _Desktop Application_).    
+    Give it a name (say, _Create Calendar Events_).
     Click "Create".
+
+    Link: https://console.cloud.google.com/auth/overview
+    Link: https://console.cloud.google.com/auth/clients/create
 
 4. Download credentials.json
 

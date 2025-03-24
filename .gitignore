@@ -1,6 +1,8 @@
+.venv/
+.vscode/
 *.ics
 credentials.json
 env/
 token.json
-.venv/
-.vscode/
+venv_ps/
+venv/
